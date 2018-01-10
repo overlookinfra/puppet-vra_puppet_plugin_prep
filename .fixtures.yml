@@ -3,6 +3,8 @@
 ---
 fixtures:
   forge_modules:
-    inifile: "puppetlabs/inifile"
+    inifile: 
+      repo: "puppetlabs/inifile"
+      ref: "1.6.0"
     augeasproviders_ssh: "herculesteam/augeasproviders_ssh"
     augeasproviders_core: "herculesteam/augeasproviders_core"
