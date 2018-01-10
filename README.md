@@ -6,75 +6,72 @@ Prepares a Puppet Enterprise master for vRA Puppet Plugin integration.
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with vra_puppet_plugin_prep](#setup)
-    * [What vra_puppet_plugin_prep affects](#what-vra_puppet_plugin_prep-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with vra_puppet_plugin_prep](#beginning-with-vra_puppet_plugin_prep)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+2. [Beginning with vra_puppet_plugin_prep](#beginning-with-vra_puppet_plugin_prep)
+3. [Usage](#usage)
+4. [Reference](#reference)
+6. [Contributors](#contributors)
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what problem it solves. This is your 30-second elevator pitch for your module. Consider including OS/Puppet version it works with.
+When setting up the vRA Puppet Plugin there are some setup steps that need to be performed on the Puppet Enterprise Master. This module automates many of these, ie it ensures that:
 
-You can give more descriptive information in a second paragraph. This paragraph should answer the questions: "What does this module *do*?" and "Why would I use it?" If your module has a range of functionality (installation, configuration, management, etc.), this is the time to mention it.
+- a system user exists for the plugin to ssh in with
+- an api user exists for the plugin to utilise
+- sudo rules are in place for this user so the plugin can run the commands it needs to
+- autosign policy is configured (shared secret via challengePassword in the CSR)
 
-## Setup
 
-### What vra_puppet_plugin_prep affects **OPTIONAL**
+## Beginning with vra_puppet_plugin_prep
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
+Default behaviour (including autosign configuration enabled):
 
 ```
-## Include augeasproviders_ssh module from forge or github.
-#### https://forge.puppet.com/herculesteam/augeasproviders_ssh
-## Include augeasproviders_core from forge or github.
-#### https://github.com/hercules-team/augeasproviders_core
+include vra_puppet_plugin_prep
 ```
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with vra_puppet_plugin_prep
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the fancy stuff with your module here. It's especially helpful if you include usage examples and code samples for doing things with your module.
+```puppet
+class { 'vra_puppet_plugin_prep':
+  vro_plugin_user   => 'vro-plugin-user',
+  vro_password      => 'puppetlabs',
+  vro_password_hash => '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.',
+  manage_autosign   => true,
+  autosign_secret   => 'S3cr3tP@ssw0rd!',
+}
+```
 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in the README Reference section.
+### Class: vra_puppet_plugin_prep
 
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
+Parameters:
 
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
+`vro_plugin_user`
+The username the plugin will connect to Puppet with, both via ssh, and api
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+Default: `vro-plugin-user`
 
-## Limitations
+`vro_password`
+The password the plugin will authenticate to the Puppet apis with.
 
-This is where you list OS compatibility, version compatibility, etc. If there are Known Issues, you might want to include them under their own heading here.
+Default: `puppetlabs`
 
-## Development
+`vro_password_hash`
+The hash of the password the plugin will authenticate with via ssh to the Puppet Master.
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
+Default: `$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.` ('puppetlabs')
 
-## Release Notes/Contributors/Etc. **Optional**
+`manage_autosign`
+Whether to configure autosigning with this module.
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+Default: True
+
+`autosign_secret`
+The secret to use for autosign validation. It is placed into the challengePassword within the CSR.
+
+Default: `S3cr3tP@ssw0rd!`
+
+## Contributors
+
+Thank you to Jeremy Adams and other contributors to the [vRO Starter Content](https://github.com/puppetlabs/puppet-vro-starter_content) project, from which much of the code in this repo has been stolen.

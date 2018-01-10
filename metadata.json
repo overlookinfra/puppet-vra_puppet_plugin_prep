@@ -1,6 +1,6 @@
 {
   "name": "jesse-vra_puppet_plugin_prep",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Jesse Reynolds",
   "summary": "Prepares a Puppet Enterprise master for vRA Puppet Plugin integration",
   "license": "Apache-2.0",

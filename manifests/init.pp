@@ -6,6 +6,15 @@
 #
 # @example
 #   include vra_puppet_plugin_prep
+#
+# @example
+#   class { 'vra_puppet_plugin_prep':
+#     vro_plugin_user    => 'vro-plugin-user',
+#     vro_password       => 'puppetlabs',
+#     vro_password_hash  => '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.',
+#     manage_autosign    => true,
+#     autosign_secret    => 'S3cr3tP@ssw0rd!',
+#   }
 class vra_puppet_plugin_prep (
   # Array  $environments      = [ 'production', 'development', ],
   # Array  $roles             = [ 'role::generic', ],
