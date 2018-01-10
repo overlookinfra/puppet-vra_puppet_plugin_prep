@@ -76,7 +76,7 @@ class vra_puppet_plugin_prep (
       owner   => 'pe-puppet',
       group   => 'pe-puppet',
       mode    => '0700',
-      content => template('vra_puppet_plugin_prep/autosign.rb.erb'),
+      content => epp('vra_puppet_plugin_prep/autosign.rb.epp', { 'autosign_secret' => $autosign_secret }),
       notify  => Service['pe-puppetserver'],
     }
 
