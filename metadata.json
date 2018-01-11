@@ -1,14 +1,15 @@
 {
   "name": "jesse-vra_puppet_plugin_prep",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Jesse Reynolds",
   "summary": "Prepares a Puppet Enterprise master for vRA Puppet Plugin integration",
   "license": "Apache-2.0",
-  "source": "https://github.com/jessereynolds/vrpuppeta_puppet_plugin_prep\u001bh",
+  "source": "https://github.com/jessereynolds/vrpuppeta_puppet_plugin_prep",
   "dependencies": [
     { "name": "herculesteam/augeasproviders_ssh",  "version_requirement": ">= 2.5.0 < 3.0.0" },
     { "name": "herculesteam/augeasproviders_core", "version_requirement": ">= 2.1.0 < 3.0.0" },
-    { "name": "puppetlabs/inifile",                "version_requirement": ">= 1.6.0 < 3.0.0" }
+    { "name": "puppetlabs/inifile",                "version_requirement": ">= 1.6.0 < 3.0.0" },
+    { "name": "pltraining/rbac",                   "version_requirement": ">= 0.0.6 < 0.1.0" }
   ],
   "operatingsystem_support": [
     {

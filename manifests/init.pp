@@ -34,22 +34,26 @@ class vra_puppet_plugin_prep (
   #   rule                 => [],
   # }
 
-  $ruby_mk_vro_plugin_user = epp('vra_puppet_plugin_prep/create_user_role.rb.epp', {
-    'username'    => $vro_plugin_user,
-    'password'    => $vro_password,
-    'rolename'    => 'VRO Plugin User',
-    'touchfile'   => '/opt/puppetlabs/puppet/cache/vro_plugin_user_created',
-    'permissions' => [
-      { 'action'      => 'view_data',
-        'instance'    => '*',
-        'object_type' => 'nodes',
-      },
-    ],
-  })
+  $vro_role_name = 'VRO Plugin User'
+  $permissions   = [
+    { 'action'      => 'view_data',
+      'instance'    => '*',
+      'object_type' => 'nodes',
+    },
+  ]
 
-  exec { 'create vro user and role':
-    command => "/opt/puppetlabs/puppet/bin/ruby -e ${shellquote($ruby_mk_vro_plugin_user)}",
-    creates => '/opt/puppetlabs/puppet/cache/vro_plugin_user_created',
+  rbac_role { $vro_role_name:
+    ensure      => present,
+    permissions => $permissions,
+  }
+
+  rbac_user { $vro_plugin_user:
+    ensure       => 'present',
+    name         => $vro_plugin_user,
+    display_name => 'vRO Puppet Plugin',
+    password     => $vro_password,
+    roles        => [ $vro_role_name ],
+    require      => Rbac_role[$vro_role_name],
   }
 
   user { $vro_plugin_user:
@@ -76,7 +80,6 @@ class vra_puppet_plugin_prep (
   sshd_config { 'ChallengeResponseAuthentication':
     ensure => present,
     value  => 'no',
-
   }
 
   if $manage_autosign {
