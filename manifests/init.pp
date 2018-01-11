@@ -23,6 +23,8 @@ class vra_puppet_plugin_prep (
   String  $vro_password_hash = '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.', #puppetlabs
   Boolean $manage_autosign   = true,
   String  $autosign_secret   = 'S3cr3tP@ssw0rd!',
+  String  $vro_email         = 'vro-plugin-user@example',
+  String  $vro_display_name  = 'vRO Puppet Plugin',
 ) {
 
   # node_group { 'Roles':
@@ -52,9 +54,10 @@ class vra_puppet_plugin_prep (
   rbac_user { $vro_plugin_user:
     ensure       => 'present',
     name         => $vro_plugin_user,
-    display_name => 'vRO Puppet Plugin',
+    display_name => $vro_display_name,
     password     => $vro_password,
     roles        => [ $vro_role_name ],
+    email        => $vro_email,
     require      => Rbac_role[$vro_role_name],
   }
 
