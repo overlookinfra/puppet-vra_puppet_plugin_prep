@@ -44,6 +44,8 @@ class vra_puppet_plugin_prep (
 
   rbac_role { $vro_role_name:
     ensure      => present,
+    name        => $vro_role_name,
+    description => $vro_role_name,
     permissions => $permissions,
   }
 
