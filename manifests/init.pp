@@ -87,6 +87,16 @@ class vra_puppet_plugin_prep (
     value  => 'no',
   }
 
+  package { 'rgen':
+    ensure   => latest,
+    provider => puppet_gem,
+  }
+  
+  package { 'puppet-strings':
+    ensure   => latest,
+    provider => puppet_gem,
+  }
+  
   if $manage_autosign {
     file { '/etc/puppetlabs/puppet/autosign.rb' :
       ensure  => file,
