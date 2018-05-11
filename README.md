@@ -37,6 +37,7 @@ class { 'vra_puppet_plugin_prep':
   vro_password      => 'puppetlabs',
   vro_password_hash => '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.',
   manage_autosign   => true,
+  manage_localuser  => true,
   autosign_secret   => 'S3cr3tP@ssw0rd!',
 }
 ```
@@ -64,6 +65,11 @@ Default: `$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.` ('puppetlabs')
 
 `manage_autosign`
 Whether to configure autosigning with this module.
+
+Default: True
+
+`manage_localuser`
+Whether to configure the local user creation with this module
 
 Default: True
 

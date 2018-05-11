@@ -22,6 +22,7 @@ class vra_puppet_plugin_prep (
   String  $vro_password      = 'puppetlabs',
   String  $vro_password_hash = '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.', #puppetlabs
   Boolean $manage_autosign   = true,
+  Boolean $manage_localuser  = true,
   String  $autosign_secret   = 'S3cr3tP@ssw0rd!',
   String  $vro_email         = 'vro-plugin-user@example',
   String  $vro_display_name  = 'vRO Puppet Plugin',
@@ -60,13 +61,14 @@ class vra_puppet_plugin_prep (
     email        => $vro_email,
     require      => Rbac_role[$vro_role_name],
   }
-
-  user { $vro_plugin_user:
-    ensure     => present,
-    shell      => '/bin/bash',
-    password   => $vro_password_hash,
-    groups     => ['pe-puppet'],
-    managehome => true,
+  if $manage_localuser {
+    user { $vro_plugin_user:
+      ensure     => present,
+      shell      => '/bin/bash',
+      password   => $vro_password_hash,
+      groups     => ['pe-puppet'],
+      managehome => true,
+    }
   }
 
   file { '/etc/sudoers.d/vro-plugin-user':
