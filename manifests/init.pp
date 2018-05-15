@@ -65,7 +65,6 @@ class vra_puppet_plugin_prep (
     ensure     => present,
     shell      => '/bin/bash',
     password   => $vro_password_hash,
-    groups     => ['pe-puppet'],
     managehome => true,
   }
 
