@@ -73,7 +73,7 @@ class vra_puppet_plugin_prep (
     mode    => '0440',
     owner   => 'root',
     group   => 'root',
-    content => epp('vra_puppet_plugin_prep/vro_sudoer_file.epp'),
+    content => epp('vra_puppet_plugin_prep/vro_sudoer_file.epp', { 'vro_plugin_user' => $vro_plugin_user }),
   }
 
   sshd_config { 'PasswordAuthentication':
@@ -90,12 +90,12 @@ class vra_puppet_plugin_prep (
     ensure   => latest,
     provider => puppet_gem,
   }
-  
+
   package { 'puppet-strings':
     ensure   => latest,
     provider => puppet_gem,
   }
-  
+
   if $manage_autosign {
     file { '/etc/puppetlabs/puppet/autosign.rb' :
       ensure  => file,
