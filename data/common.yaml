@@ -1,0 +1,8 @@
+---
+vra_puppet_plugin_prep::vro_plugin_user:   'vro-plugin-user'
+vra_puppet_plugin_prep::vro_password:      'puppetlabs'
+vra_puppet_plugin_prep::vro_password_hash: '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.'
+vra_puppet_plugin_prep::manage_autosign:    true
+vra_puppet_plugin_prep::autosign_secret:    'S3cr3tP@ssw0rd!'
+vra_puppet_plugin_prep::vro_email:          'vro-plugin-user@example'
+vra_puppet_plugin_prep::vro_display_name:   'vRO Puppet Plugin'
