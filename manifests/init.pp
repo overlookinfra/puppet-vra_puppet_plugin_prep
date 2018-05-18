@@ -16,25 +16,14 @@
 #     autosign_secret    => 'S3cr3tP@ssw0rd!',
 #   }
 class vra_puppet_plugin_prep (
-  # Array  $environments      = [ 'production', 'development', ],
-  # Array  $roles             = [ 'role::generic', ],
-  String  $vro_plugin_user   = 'vro-plugin-user',
-  String  $vro_password      = 'puppetlabs',
-  String  $vro_password_hash = '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.', #puppetlabs
-  Boolean $manage_autosign   = true,
-  String  $autosign_secret   = 'S3cr3tP@ssw0rd!',
-  String  $vro_email         = 'vro-plugin-user@example',
-  String  $vro_display_name  = 'vRO Puppet Plugin',
+  String  $vro_plugin_user,
+  String  $vro_password,
+  String  $vro_password_hash,
+  Boolean $manage_autosign,
+  String  $autosign_secret,
+  String  $vro_email,
+  String  $vro_display_name,
 ) {
-
-  # node_group { 'Roles':
-  #   ensure               => 'present',
-  #   classes              => {},
-  #   environment          => 'production',
-  #   override_environment => 'false',
-  #   parent               => 'All Nodes',
-  #   rule                 => [],
-  # }
 
   $vro_role_name = 'VRO Plugin User'
   $permissions   = [
