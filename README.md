@@ -62,6 +62,11 @@ The hash of the password the plugin will authenticate with via ssh to the Puppet
 
 Default: `$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.` ('puppetlabs')
 
+`system_uid`
+Whether to create the vro plugin user as a system user.
+
+Default: `false`
+
 `manage_autosign`
 Whether to configure autosigning with this module.
 
