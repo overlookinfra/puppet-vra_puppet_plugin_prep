@@ -5,6 +5,7 @@
   "summary": "Prepares a Puppet Enterprise master for vRA Puppet Plugin integration",
   "license": "Apache-2.0",
   "source": "https://github.com/jessereynolds/puppet-vra_puppet_plugin_prep",
+  "issues_url": "https://github.com/jessereynolds/puppet-vra_puppet_plugin_prep/issues",
   "dependencies": [
     {
       "name": "herculesteam/augeasproviders_ssh",
