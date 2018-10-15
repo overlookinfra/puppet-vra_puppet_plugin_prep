@@ -1,6 +1,6 @@
 {
   "name": "jesse-vra_puppet_plugin_prep",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "author": "Jesse Reynolds",
   "summary": "Prepares a Puppet Enterprise master for vRA Puppet Plugin integration",
   "license": "Apache-2.0",
@@ -40,7 +40,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
+      "version_requirement": ">= 4.7.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.5.0",
