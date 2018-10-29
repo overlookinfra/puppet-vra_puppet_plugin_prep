@@ -1,28 +1,23 @@
-## /etc/sudoers.d/vro-plugin-user
-## This file allows the vro-plugin-user to remove nodes that are destroyed in VRO/VRA
-## This file also disallows the vro-plugin-user from removing the Master and other PE Internal certs.
+<%- | String $vro_plugin_user | -%>
+## /etc/sudoers.d/<%= $vro_plugin_user %>
+## This file allows the vRO plugin user '<%= $vro_plugin_user %>' to remove nodes that are destroyed in vRO/vRA.
+## This file also disallows the user '<%= $vro_plugin_user %>' from removing the Master and other PE Internal certs.
 
-Defaults:vro-plugin-user !requiretty
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet node purge *
-vro-plugin-user ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge *[[\:blank\:]]*
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet config print *
-vro-plugin-user ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet config print *[[\:blank\:]]*
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/facter -p puppetversion
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/facter -p pe_server_version
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet agent -t
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet agent --test --color=false --detailed-exitcodes
-vro-plugin-user ALL = (root) NOPASSWD: /bin/kill -HUP *
-vro-plugin-user ALL = (root) NOPASSWD: !/bin/kill -HUP *[[\:blank\:]]*
-vro-plugin-user ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge <%= $trusted[certname] %>
-vro-plugin-user ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge pe-internal-mcollective-servers
-vro-plugin-user ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge pe-internal-peadmin-mcollective-client
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
-vro-plugin-user ALL = (root) NOPASSWD: /bin/cp /etc/puppetlabs/puppet/ssl/ca/ca_crl.pem /etc/puppetlabs/puppet/ssl/crl.pem
-# /bin/find /etc/puppetlabs/code/environments/feature_demoDevWorkflow/site/role/manifests/ -name *.pp
+Defaults:<%= $vro_plugin_user %> !requiretty
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet config print *
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet config print *[[\:blank\:]]*
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/facter -p puppetversion
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/facter -p pe_server_version
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet agent -t
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet agent --test --color=false --detailed-exitcodes
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet node purge *
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge *[[\:blank\:]]*
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge <%= $trusted[certname] %>
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge pe-internal-mcollective-servers
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge pe-internal-peadmin-mcollective-client
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /bin/ls -1 /etc/puppetlabs/code/environments/
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet strings *
 # FIXME: disallow -exec flag to find ... or stop using find in the plugin
-vro-plugin-user ALL = (root) NOPASSWD: /bin/find /etc/puppetlabs/code/environments/*/site/role/manifests/ -name *
-vro-plugin-user ALL = (root) NOPASSWD: /bin/ls -1 /etc/puppetlabs/code/environments/
-# /opt/puppetlabs/bin/puppet strings /etc/puppetlabs/code/environments/feature_vra/site/role/manifests/**/*.pp --format json
-# FIXME: see if sudo will let us be more restrictive about the path matching patterns
-vro-plugin-user ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet strings * --format json
+<%= $vro_plugin_user %> ALL = (root) NOPASSWD: /bin/find /etc/puppetlabs/code/environments/*

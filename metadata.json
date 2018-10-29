@@ -1,11 +1,10 @@
 {
-  "name": "jesse-vra_puppet_plugin_prep",
-  "version": "0.1.7",
+  "name": "puppetlabs-vra_puppet_plugin_prep",
+  "version": "1.0.0",
   "author": "Jesse Reynolds",
   "summary": "Prepares a Puppet Enterprise master for vRA Puppet Plugin integration",
   "license": "Apache-2.0",
-  "source": "https://github.com/jessereynolds/puppet-vra_puppet_plugin_prep",
-  "issues_url": "https://github.com/jessereynolds/puppet-vra_puppet_plugin_prep/issues",
+  "source": "https://github.com/puppetlabs/puppet-vra_puppet_plugin_prep",
   "dependencies": [
     {
       "name": "herculesteam/augeasproviders_ssh",

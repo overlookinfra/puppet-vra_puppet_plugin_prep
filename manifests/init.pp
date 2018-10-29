@@ -16,26 +16,15 @@
 #     autosign_secret    => 'S3cr3tP@ssw0rd!',
 #   }
 class vra_puppet_plugin_prep (
-  # Array  $environments      = [ 'production', 'development', ],
-  # Array  $roles             = [ 'role::generic', ],
-  String  $vro_plugin_user   = 'vro-plugin-user',
-  String  $vro_password      = 'puppetlabs',
-  String  $vro_password_hash = '$1$Fq9vkV1h$4oMRtIjjjAhi6XQVSH6.Y.', #puppetlabs
-  Boolean $manage_autosign   = true,
-  Boolean $manage_localuser  = true,
-  String  $autosign_secret   = 'S3cr3tP@ssw0rd!',
-  String  $vro_email         = 'vro-plugin-user@example',
-  String  $vro_display_name  = 'vRO Puppet Plugin',
+  String  $vro_plugin_user,
+  String  $vro_password,
+  String  $vro_password_hash,
+  Boolean $manage_autosign,
+  Boolean $manage_localuser,
+  String  $autosign_secret,
+  String  $vro_email,
+  String  $vro_display_name,
 ) {
-
-  # node_group { 'Roles':
-  #   ensure               => 'present',
-  #   classes              => {},
-  #   environment          => 'production',
-  #   override_environment => 'false',
-  #   parent               => 'All Nodes',
-  #   rule                 => [],
-  # }
 
   $vro_role_name = 'VRO Plugin User'
   $permissions   = [
@@ -61,12 +50,12 @@ class vra_puppet_plugin_prep (
     email        => $vro_email,
     require      => Rbac_role[$vro_role_name],
   }
+
   if $manage_localuser {
     user { $vro_plugin_user:
       ensure     => present,
       shell      => '/bin/bash',
       password   => $vro_password_hash,
-      groups     => ['pe-puppet'],
       managehome => true,
     }
   }
@@ -76,7 +65,7 @@ class vra_puppet_plugin_prep (
     mode    => '0440',
     owner   => 'root',
     group   => 'root',
-    content => epp('vra_puppet_plugin_prep/vro_sudoer_file.epp'),
+    content => epp('vra_puppet_plugin_prep/vro_sudoer_file.epp', { 'vro_plugin_user' => $vro_plugin_user }),
   }
 
   sshd_config { 'PasswordAuthentication':
@@ -87,6 +76,16 @@ class vra_puppet_plugin_prep (
   sshd_config { 'ChallengeResponseAuthentication':
     ensure => present,
     value  => 'no',
+  }
+
+  package { 'rgen':
+    ensure   => latest,
+    provider => puppet_gem,
+  }
+
+  package { 'puppet-strings':
+    ensure   => latest,
+    provider => puppet_gem,
   }
 
   if $manage_autosign {
