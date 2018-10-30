@@ -1,5 +1,5 @@
 <%- | String $vro_plugin_user | -%>
-## /etc/sudoers.d/vro-plugin-user
+## /etc/sudoers.d/<%= $vro_plugin_user %>
 ## This file allows the vRO plugin user '<%= $vro_plugin_user %>' to remove nodes that are destroyed in vRO/vRA.
 ## This file also disallows the user '<%= $vro_plugin_user %>' from removing the Master and other PE Internal certs.
 
@@ -19,4 +19,5 @@ Defaults:<%= $vro_plugin_user %> !requiretty
 <%= $vro_plugin_user %> ALL = (root) NOPASSWD: !/opt/puppetlabs/bin/puppet node purge pe-internal-peadmin-mcollective-client
 <%= $vro_plugin_user %> ALL = (root) NOPASSWD: /bin/ls -1 /etc/puppetlabs/code/environments/
 <%= $vro_plugin_user %> ALL = (root) NOPASSWD: /opt/puppetlabs/bin/puppet strings *
+# FIXME: disallow -exec flag to find ... or stop using find in the plugin
 <%= $vro_plugin_user %> ALL = (root) NOPASSWD: /bin/find /etc/puppetlabs/code/environments/*
