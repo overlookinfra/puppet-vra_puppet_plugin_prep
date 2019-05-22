@@ -28,9 +28,25 @@ class vra_puppet_plugin_prep (
 
   $vro_role_name = 'VRO Plugin User'
   $permissions   = [
-    { 'action'      => 'view_data',
+    { 'object_type' => 'cert_requests',
+      'action'      => 'accept_reject',
       'instance'    => '*',
-      'object_type' => 'nodes',
+    },
+    { 'object_type' => 'tasks',
+      'action'      => 'run',
+      'instance'    => '*',
+    },
+    { 'object_type' => 'nodes',
+      'action'      => 'view_data',
+      'instance'    => '*',
+    },
+    { 'object_type' => 'orchestrator',
+      'action'      => 'view',
+      'instance'    => '*',
+    },
+    { 'object_type' => 'puppet_agent',
+      'action'      => 'run',
+      'instance'    => '*',
     },
   ]
 
