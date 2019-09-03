@@ -21,6 +21,7 @@ class vra_puppet_plugin_prep (
   String  $vro_password_hash,
   Boolean $manage_autosign,
   Boolean $manage_localuser,
+  Boolean $manage_sshd,
   String  $autosign_secret,
   String  $vro_email,
   String  $vro_display_name,
@@ -84,14 +85,16 @@ class vra_puppet_plugin_prep (
     content => epp('vra_puppet_plugin_prep/vro_sudoer_file.epp', { 'vro_plugin_user' => $vro_plugin_user }),
   }
 
-  sshd_config { 'PasswordAuthentication':
-    ensure => present,
-    value  => 'yes',
-  }
+  if $manage_sshd {
+    sshd_config { 'PasswordAuthentication':
+      ensure => present,
+      value  => 'yes',
+    }
 
-  sshd_config { 'ChallengeResponseAuthentication':
-    ensure => present,
-    value  => 'no',
+    sshd_config { 'ChallengeResponseAuthentication':
+      ensure => present,
+      value  => 'no',
+    }
   }
 
   package { 'rgen':
