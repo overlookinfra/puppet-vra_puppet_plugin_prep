@@ -95,12 +95,12 @@ class vra_puppet_plugin_prep (
   }
 
   package { 'rgen':
-    ensure   => latest,
+    ensure   => present,
     provider => puppet_gem,
   }
 
   package { 'puppet-strings':
-    ensure   => latest,
+    ensure   => present,
     provider => puppet_gem,
   }
 
